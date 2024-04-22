@@ -9,6 +9,11 @@ import (
 	"strings"
 )
 
+const (
+	TaxRate   = 0.1  // Persentase pajak sebesar 10%
+	ChargeFee = 5000 // Biaya tambahan (charge) sebesar 5000
+)
+
 func PembayaranBarang(hargaTotal float64, metodePembayaran string, dicicil bool) error {
 	// cek hargaTotal
 	if hargaTotal <= 0 {
@@ -41,7 +46,20 @@ func PembayaranBarang(hargaTotal float64, metodePembayaran string, dicicil bool)
 		}
 	}
 
+	// Hitung total harga
+	totalHarga := HitungTotalHarga(hargaTotal)
+
+	fmt.Printf("Total harga: %.2f\n", totalHarga)
+
 	return nil
+}
+
+func HitungTotalHarga(hargaTotal float64) float64 {
+	// Hitung pajak
+	tax := hargaTotal * TaxRate
+
+	// Hitung total harga dengan menambahkan pajak dan biaya tambahan (charge)
+	return hargaTotal + tax + ChargeFee
 }
 
 func main() {
